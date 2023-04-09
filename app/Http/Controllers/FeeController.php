@@ -47,6 +47,7 @@ class FeeController extends Controller
             'success' => "Fee create successfully and students of the selected classes have been billed"
         ]);
     }
+    // git remote set-url origin https://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@github.com/div-io-dev/house-of-blessing-mgt.git
 
     public function update(Fee $fee, UpdateRequest $request){
         $validatedData = $request->validated();
