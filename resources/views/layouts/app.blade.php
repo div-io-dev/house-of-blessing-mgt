@@ -51,7 +51,7 @@
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">
                     <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © SCHOMAN 2022</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Full <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">School Management System</a> from fiicomp .inc</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">   <a href="https://www.velstack.com/" target="_blank">a Velstack Treysoft Inc</a>  </span>
                 </div>
             </footer>
             <!-- partial -->

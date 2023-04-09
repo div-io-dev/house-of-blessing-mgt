@@ -2,10 +2,11 @@
 @section('header') Subject @endsection
 <div wire:id="subjects" class="content-wrapper">
     <div class="row">
-        <div class="col-12 grid-margin stretch-card">
+        <div class="row col-12 grid-margin stretch-card">
+
             @if(count($subjects) < 1)
                 <div class="mt-5">
-                    <h4>Oops!, there are no subject in school DB, please add a new class</h4>
+                    <h4>Oops!, there are no classes in school DB, please add a new class</h4>
                 </div>
             @endif
 
@@ -13,15 +14,15 @@
                 <div class="col-md-4 col-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">{{ $subject->name }}</h4>
+                            <h4 class="card-title">{{ $subject->name .' | '.$subject->code}}</h4>
                             <div class="media">
                                 <i class="mdi mdi-earth icon-md text-info d-flex align-self-start mr-3"></i>
                                 <div class="media-body">
                                     <p class="card-text">
-                                        Classes offering this subject - {{ count($subject->classes) }}
+                                        {{ count($subject->classes)}} Students
                                     </p>
 {{--                                    <p>--}}
-{{--                                        <a href="{{ route('subjects.subject', $subject->id) }}" class="btn btn-primary">Info</a>--}}
+{{--                                        <a href="{{ route('subjects.subject', $subject->id)}}" class="btn btn-primary">Info</a>--}}
 {{--                                    </p>--}}
                                 </div>
                             </div>
@@ -29,9 +30,10 @@
                     </div>
                 </div>
             @endforeach
-
         </div>
     </div>
+
+
     <button class="float" data-toggle="modal" data-target="#addSubjectModal">
         <i class="mdi mdi-plus float-icon"></i>
     </button>
@@ -47,11 +49,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="forms-sample" wire:submit.prevent="addSubject" id="add_subject_form">
-                        <div class="form-group">
-                            <label for="new_subject_code">Subject Code</label>
-                            <input wire:model.defer="new_subject_code" type="text" class="form-control" id="new_subject_code">
-                            @error('new_subject_code')<span class="text-danger text-small">{{ $message }}</span> @enderror
-                        </div>
+
                         <div class="form-group">
                             <label for="new_subject_name">Subject Name</label>
                             <input wire:model.defer="new_subject_name" type="text" class="form-control" id="new_subject_name">

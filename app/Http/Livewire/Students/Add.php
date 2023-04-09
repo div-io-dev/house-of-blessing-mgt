@@ -38,7 +38,7 @@ class Add extends Component
         'student.other_names' => 'nullable|string',
         'student.bus_stop' => 'nullable',
         'use_existing_parent' => 'required',
-        'profile_image' => 'image|max:2024',
+        'profile_image' => 'nullable|image|max:2024',
 
     ];
     protected $messages = [
@@ -92,8 +92,11 @@ class Add extends Component
                 $parent = (new ParentService())->store($this->parent);
                 $this->student['parent_'] =  $parent->id;
             }
-            $image_path = $this->profile_image->store('uploaded_images/students', 'public_uploads');
-            $this->student['profile_image'] = $image_path;
+            if (isset($this->student['profile_image'])){
+                $image_path = $this->profile_image->store('uploaded_images/students', 'public_uploads');
+                $this->student['profile_image'] = $image_path;
+            }
+
 
 //            if ($this->student['bus_stop'] == 'null') $this->student['bus_stop'] = null;
             $student = $studentService->store($this->student);

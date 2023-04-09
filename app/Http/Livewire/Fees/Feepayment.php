@@ -7,7 +7,8 @@ use App\Models\Bill as BillModel;
 use App\Models\Student;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use Arhinful\LaravelMnotify\MNotify;
+
+use Velstack\Mnotify\Notifications\Notify;
 
 class Feepayment extends Component
 {
@@ -43,19 +44,17 @@ class Feepayment extends Component
             'mobile_number' => $this->payer_mobile_number,
         ];
         payStudentFee($student, $this->amount, $payer);
-        $this->reset(['amount']);
+
         $this->student_bills = $this->updateBill($student);
         $this->amount_owning = $student->amount_owing;
         $this->alert(message: "Fees settled successfully");
 
         //sending bill notification
         $bill = BillModel::all();
-        $destinationPhone = $this->payer_mobile_number;
-        $amountPaid = $this->amount;
 
-
-        $sender= new MNotify();
-        $sender->sendQuickSMS([$destinationPhone], "Thank you, We have received your payment of GHS$amountPaid for School Fees at House of Blessing School.");
+        Notify::sendQuickSMS([$this->payer_mobile_number],
+            "Thank you, We have received your payment of GHS$this->amount as a School Fees at House of Blessing International School.");
+        $this->reset();
 
 
 
@@ -63,7 +62,7 @@ class Feepayment extends Component
 
     public function fetchStudentInfo(){
         $this->reset(['student_name_n_class', 'amount_owning', 'student_bills']);
-        if (strlen($this->student_number) != 8){
+        if (strlen($this->student_number) != 7){
             return;
         }
         $this->validate([

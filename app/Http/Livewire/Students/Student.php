@@ -4,13 +4,16 @@ namespace App\Http\Livewire\Students;
 
 use App\Models\Class_;
 use App\Services\ParentService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use App\Models\Student as StudentModel;
+use Livewire\WithFileUploads;
 
 class Student extends Component
 {
-    use LivewireAlert;
+    use LivewireAlert, WithFileUploads;
 
     public StudentModel $student;
     public $classes;
@@ -24,6 +27,7 @@ class Student extends Component
         'address'
     ];
     protected $rules = [
+        'update_student.profile_image' => 'nullable|image|max:1024',
         'update_student.first_name' => 'required|string',
         'update_student.last_name' => 'required|string',
         'update_student.dob' => 'required|date',
@@ -51,6 +55,7 @@ class Student extends Component
 
     public function render()
     {
+
         $this->update_student['first_name'] = $this->student->first_name;
         $this->update_student['last_name'] = $this->student->last_name;
         $this->update_student['other_names'] = $this->student->other_names;
@@ -74,7 +79,16 @@ class Student extends Component
     }
     public function update(){
         $this->validate();
-//        dd($this->update_student['bus_stop']);
+
+        if (isset($this->update_student['profile_image']) && empty($this->update_student['profile_image'])){
+
+            $newImagePath = $this->update_student['profile_image']->store('/uploaded_images/students', 'public_uploads');
+            $this->student->update([
+                'profile_image' => $newImagePath,
+            ]);
+            $this->alert('success', "Image updated");
+        }
+
         $this->student->update([
             'first_name' => $this->update_student['first_name'],
             'last_name' => $this->update_student['last_name'],
@@ -82,6 +96,7 @@ class Student extends Component
             'dob' => $this->update_student['dob'],
             'bus_stop_id' => $this->update_student['bus_stop'] == 'null' ? null : $this->update_student['bus_stop'],
         ]);
+
 
         $this->bus_stop = $this->student->busStop;
         $this->alert('success', "Student updated successfully");
@@ -109,15 +124,5 @@ class Student extends Component
         $this->alert('success', "Parent's details updated successfully");
     }
 
-//    public function changeProfileImage(){
-//        $this->validate([
-//            'new_profile_image' => 'required|image|max:2024'
-//        ]);
-//        $newImagePath = $this->new_profile_image->store('students', 'public_uploads');
-//        $this->student->update([
-//            'profile_image' => $newImagePath
-//        ]);
-//        $this->alert(message: "profile image updated successfully");
-//    }
 
 }

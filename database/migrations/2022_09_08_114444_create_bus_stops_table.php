@@ -27,12 +27,12 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        \App\Models\BusStop::create([
-            'town_name' => 'Fiapre',
-            'kilometers' => 15.00,
-            'price' => 5.00,
-            'added_by_id' => 1,
-        ]);
+//        \App\Models\BusStop::create([
+//            'town_name' => 'Fiapre',
+//            'kilometers' => 15.00,
+//            'price' => 5.00,
+//            'added_by_id' => 1,
+//        ]);
     }
 
     /**

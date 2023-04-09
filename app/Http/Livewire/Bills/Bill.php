@@ -7,6 +7,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use App\Models\Bill as BIllModel;
 use Arhinful\LaravelMnotify\MNotify;
+use Velstack\Mnotify\Notifications\Notify;
 
 class Bill extends Component
 {
@@ -48,8 +49,9 @@ class Bill extends Component
         $amountPaid = $this->amount;
         $amount_left= $bill->amount_left;
 
-        $sender= new MNotify();
-        $sender->sendQuickSMS([$destinationPhone], "Thank you, We have received your payment of GHS$amountPaid for School Fees at House of Blessing School. You have a balance of GHS$amount_left to settle.");
+
+        Notify::sendQuickSMS([$destinationPhone],
+            "Thank you, We have received your payment of GHS$amountPaid for School Fees at House of Blessing School. You have a balance of GHS$amount_left to settle.");
 
 
 

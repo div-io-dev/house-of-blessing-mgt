@@ -39,7 +39,7 @@ class FeeController extends Controller
                 ]);
                 // create bills for each student of the class
                 foreach ($class->students as $student){
-                    (new BillService())->store($student, $items_total_price, 'fee', $fee->id);
+                    (new BillService())->store($student, $items_total_price, 'School Fees', $fee->id);
                 }
             }
         }
@@ -82,7 +82,7 @@ class FeeController extends Controller
                     ]);
                 }
                 else{
-                    (new BillService())->store($student, $items_total_price, 'fee', $fee->id);
+                    (new BillService())->store($student, $items_total_price, 'School Fees', $fee->id);
                 }
             }
         }

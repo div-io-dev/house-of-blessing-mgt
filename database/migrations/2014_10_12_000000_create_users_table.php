@@ -28,10 +28,10 @@ return new class extends Migration
         });
 
         User::create([
-            'name' => 'Default Admin',
-            'username' => 'fii',
-            'email' => 'kofibusy@gmail.com',
-            'password' =>bcrypt('123'),
+            'name' => 'School Admin',
+            'username' => 'hob',
+            'email' => 'info@hobschools.com',
+            'password' =>bcrypt('byvelstack'),
         ]);
     }
 

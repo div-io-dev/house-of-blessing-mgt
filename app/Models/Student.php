@@ -11,10 +11,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Student extends Model
 {
     use HasFactory, SoftDeletes, ModelBootingTrait;
+
     protected $guarded = ['id', 'uuid', 'created_at', 'updated_at', 'deleted_at'];
     protected $appends = [
         'full_name', 'amount_owing',
     ];
+
+    public function scopeSearch($query, $term){
+        $term =  "%$term%";
+        $query->where(function ($query) use ($term){
+            $query->where('first_name','like', $term)
+                ->orWhere('student_number', 'like',  $term)
+                ->orWhere('last_name', 'like', $term);
+
+        });
+    }
 
     public function parent(){
         return $this->belongsTo(Parent_::class, 'parent__id', 'id');
@@ -63,6 +74,6 @@ class Student extends Model
     }
 
     public function profileImageUrl() : Attribute {
-        return new Attribute(get: fn() => url('/').'/'.$this->profile_image);
+        return new Attribute(get: fn() => config('app.url').'/public/'.$this->profile_image);
     }
 }

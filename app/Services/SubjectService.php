@@ -8,10 +8,10 @@ use App\Models\Subject;
 
 class SubjectService
 {
-    public function create($name, $code){
+    public function create($name){
         $subject = Subject::create([
             'name' => $name,
-            'code' => $code,
+            'code' => rand(000,999),
         ]);
         return $subject;
     }

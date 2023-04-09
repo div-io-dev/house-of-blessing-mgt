@@ -2,15 +2,16 @@
 
 namespace App\Notifications;
 
-use Arhinful\LaravelMnotify\NotificationDriver\MNotifyMessage;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Velstack\Mnotify\Notifications\MnotifyMessage;
 
 class NotifyParent extends Notification
 {
     use Queueable;
+
     public string $message_body;
 
     public function __construct($message_body)
@@ -23,9 +24,10 @@ class NotifyParent extends Notification
         return ['mnotify'];
     }
 
-    public function toMNotify($notifiable)
+    public function toMnotify($notifiable)
     {
-        return (new MNotifyMessage())->content($this->message_body);
+        return (new  MnotifyMessage())
+            ->message($this->message_body);
     }
 
     /**

@@ -41,7 +41,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([config('jetstream.auth_session'), ])
+Route::get('test', \App\Http\Livewire\Test::class)->name('test');
+
+Route::middleware([config('jetstream.auth_session'), 'auth' ])
     ->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
@@ -129,6 +131,8 @@ Route::middleware([config('jetstream.auth_session'), ])
         Route::get('/', BusStops::class)->name('bus_stops');
         Route::get('/{bus_stop}/info', BusStopInfo::class)->name('bus_stop.info');
     });
+
+
 
 });
 

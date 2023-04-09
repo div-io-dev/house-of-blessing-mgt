@@ -29,9 +29,9 @@ class Subjects extends Component
     public function addSubject(){
         $this->validate([
             'new_subject_name' => 'required|string|unique:subjects,name',
-            'new_subject_code' => 'required|string|unique:subjects,code',
+           // 'new_subject_code' => 'required|string|unique:subjects,code',
         ]);
-        $subject = (new SubjectService())->create(name: $this->new_subject_name, code: $this->new_subject_code);
+        $subject = (new SubjectService())->create(name: $this->new_subject_name);
         $this->alert(message: "Subject with the name '$this->new_subject_name' has been created successfully");
         $this->new_subject_name = ""; $this->new_subject_code = "";
     }

@@ -9,8 +9,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{ $student->profile_image_url }}" alt="Student" style="border-radius: 50%; width: 150px; height: 150px">
-                                <div class="mt-3">
+                                @if(isset($student->profile_image))
+                                    <img src="/{{$student->profile_image }}" alt="Student" style="border-radius: 50%; width: 150px; height: 150px">
+                                @endif
+                               <div class="mt-3">
                                     <h4>{{"$student->first_name $student->last_name" }}</h4>
                                     <p class="text-secondary mb-1">{{ $student->other_names }}</p>
                                     <p class="text-muted font-size-sm"><a href="{{ route('classes.class', $student->class->id) }}">{{ $student->class->name }}</a></p>
@@ -110,7 +112,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Student Code</h6>
+                                    <h6 class="mb-0">Student ID</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {{ $student->student_number }}
@@ -287,6 +289,13 @@
                 </div>
                 <div class="modal-body">
                     <form class="forms-sample" wire:submit.prevent="update" id="update_form">
+
+                            <div class="form-group">
+                                <label for="profile_image">iMAGE</label>
+                                <input wire:model.defer="update_student.profile_image" type="file" class="form-control" id="profile_image">
+                                @error('updateStudent.profile_image')<span class="text-danger text-small">{{ $message }}</span> @enderror
+                            </div>
+
                         <div class="form-group">
                             <label for="first_name">First Name</label>
                             <input wire:model.defer="update_student.first_name" type="text" class="form-control" id="first_name">

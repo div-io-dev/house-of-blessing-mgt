@@ -4,14 +4,25 @@ namespace App\Http\Livewire\Students;
 
 use Livewire\Component;
 use App\Models\Student;
+use Livewire\WithPagination;
 
 class Students extends Component
 {
-    public $students;
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+   // public $students;
+    public $search = '';
 
     public function render()
     {
-        $this->students = Student::orderBy('first_name', 'ASC')->get();
-        return view('livewire.students.students');
+        return view('livewire.students.students',[
+           'students' =>  Student::search(trim($this->search))
+            ->orderBy('first_name', 'ASC')
+            ->paginate()
+        ]);
     }
+
+
+
 }
